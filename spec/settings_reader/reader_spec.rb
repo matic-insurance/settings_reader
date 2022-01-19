@@ -1,22 +1,10 @@
 RSpec.describe SettingsReader::Reader do
-  let(:config) do
-    SettingsReader::Configuration.new.tap do |config|
-      config.base_file_path = fixture_path('base_application_settings')
-    end
-  end
+  let(:config) { SettingsReader.config }
   let(:reader) { described_class.new('', config) }
 
   context 'default providers' do
-    before do
-      set_consul_value('application/services/consul/domain', '0.0.0.0')
-    end
-
     describe '#get' do
-      it 'gets value from consul if it exists' do
-        expect(reader.get('application/services/consul/domain')).to eq('0.0.0.0')
-      end
-
-      it 'gets value from file if it does not exist in Consul' do
+      it 'gets value from file' do
         expect(reader.get('application/name')).to eq('NestedStructure')
       end
 
@@ -73,15 +61,15 @@ RSpec.describe SettingsReader::Reader do
     let(:reader) { described_class.new('', config).load('application') }
 
     before do
-      set_consul_value('application/services/consul/domain', '0.0.0.0')
+      set_custom_value('application/services/consul/domain', '0.0.0.0')
     end
 
     describe '#get' do
-      it 'gets value from consul if it exists' do
+      it 'gets custom value from first backend' do
         expect(reader.get('services/consul/domain')).to eq('0.0.0.0')
       end
 
-      it 'gets value from file if it does not exist in Consul' do
+      it 'gets value from file if it does not exist in first backend' do
         expect(reader.get('name')).to eq('NestedStructure')
       end
 
@@ -105,7 +93,7 @@ RSpec.describe SettingsReader::Reader do
 
     before do
       config.value_resolvers = [resolver_class]
-      set_consul_value('application/key', 'please_resolve')
+      set_custom_value('application/key', 'please_resolve')
     end
 
     describe '#get' do

@@ -9,13 +9,17 @@ end
 RSpec.configure do |config|
   config.include(Helpers::Configuration)
 
-  config.before(:each, :default_settings_file) do
+  config.before(:each) do
     SettingsReader.configure do |settings_config|
       settings_config.base_file_path = fixture_path('base_application_settings')
+      settings_config.settings_providers = [
+        Helpers::Backends::MemoryResolver,
+        SettingsReader::Providers::LocalStorage
+      ]
     end
   end
 
-  config.after(:each, :default_settings_file) do
+  config.after(:each) do
     SettingsReader.config = SettingsReader::Configuration.new
   end
 end
