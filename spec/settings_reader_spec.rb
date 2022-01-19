@@ -4,7 +4,7 @@ RSpec.describe SettingsReader do
   end
 
   it 'has load method' do
-    expect(SettingsReader).to respond_to(:load)
+    expect(described_class).to respond_to(:load)
   end
 
   describe 'integration flows', :default_settings_file do

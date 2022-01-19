@@ -32,7 +32,7 @@ end
 RSpec.configure do |config|
   config.include(Helpers::Backends)
 
-  config.after(:each) do
+  config.after do
     clear_custom_values
   end
 end

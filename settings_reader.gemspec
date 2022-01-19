@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Volodymyr Mykhailyk']
   spec.email         = ['712680+volodymyr-mykhailyk@users.noreply.github.com']
 
-  spec.summary       = 'Flexible Settings reader with support of custom backends and Value resolutions'
+  spec.summary       = 'Flexible Settings reader with support of custom backends and value resolutions'
   spec.description   = <<-DESCRIPTION
     Customizable 2 step setting reading for your application.
 

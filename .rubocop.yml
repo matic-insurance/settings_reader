@@ -7,3 +7,6 @@ AllCops:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/BlockLength:
+  ExcludedMethods: ['describe', 'context', 'shared_examples']
