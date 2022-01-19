@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     settings_reader (0.0.0)
+      deep_merge (~> 1.2)
 
 GEM
   remote: https://rubygems.org/
@@ -9,6 +10,7 @@ GEM
     ast (2.4.2)
     codecov (0.6.0)
       simplecov (>= 0.15, < 0.22)
+    deep_merge (1.2.2)
     diff-lcs (1.5.0)
     docile (1.4.0)
     parallel (1.21.0)
