@@ -5,7 +5,7 @@ module SettingsReader
     PARSING_CLASSES = [Integer, Float, ->(value) { JSON.parse(value) }].freeze
 
     class << self
-      def cast_consul_value(value)
+      def cast_value_from_string(value)
         return nil if value.nil?
         return false if value == 'false'
         return true if value == 'true'
@@ -39,7 +39,7 @@ module SettingsReader
 
       def convert_to_hash(data)
         data_h = data.map do |item|
-          value = cast_consul_value(item[:value])
+          value = cast_value_from_string(item[:value])
           item[:key].split('/').reverse.reduce(value) { |h, v| { v => h } }
         end
         data_h.reduce({}) do |dest, source|
