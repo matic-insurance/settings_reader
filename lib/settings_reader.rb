@@ -1,4 +1,4 @@
-require "settings_reader/version"
+require 'settings_reader/version'
 
 module SettingsReader
   class Error < StandardError; end
