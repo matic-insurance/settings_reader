@@ -35,6 +35,10 @@ RSpec.describe SettingsReader::Utils do
     it 'casts jsons' do
       expect(utils.cast_value_from_string('{"a": 1}')).to eq({ 'a' => 1 })
     end
+
+    it 'casts strings' do
+      expect(utils.cast_value_from_string('{"abcde')).to eq('{"abcde')
+    end
   end
 
   describe '#generate_path' do
