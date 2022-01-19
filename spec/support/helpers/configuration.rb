@@ -9,7 +9,7 @@ end
 RSpec.configure do |config|
   config.include(Helpers::Configuration)
 
-  config.before(:each) do
+  config.before do
     SettingsReader.configure do |settings_config|
       settings_config.base_file_path = fixture_path('base_application_settings')
       settings_config.settings_providers = [
@@ -19,7 +19,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.after(:each) do
+  config.after do
     SettingsReader.config = SettingsReader::Configuration.new
   end
 end

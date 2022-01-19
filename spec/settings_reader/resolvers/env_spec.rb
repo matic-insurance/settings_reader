@@ -1,22 +1,23 @@
 RSpec.describe SettingsReader::Resolvers::Env do
   subject(:resolver) { described_class.new }
+
   let(:path) { 'application/hostname' }
 
   describe '#resolvable?' do
     it 'returns true when starts with env://' do
-      expect(resolver.resolvable?('env://TEST_URL', path)).to be_truthy
+      expect(resolver).to be_resolvable('env://TEST_URL', path)
     end
 
     it 'returns false for nil' do
-      expect(resolver.resolvable?(nil, path)).to be_falsey
+      expect(resolver).not_to be_resolvable(nil, path)
     end
 
     it 'returns false for other strings' do
-      expect(resolver.resolvable?('envTEST_URL', path)).to be_falsey
+      expect(resolver).not_to be_resolvable('envTEST_URL', path)
     end
 
     it 'returns false for int' do
-      expect(resolver.resolvable?(1, path)).to be_falsey
+      expect(resolver).not_to be_resolvable(1, path)
     end
   end
 

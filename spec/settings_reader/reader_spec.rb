@@ -2,7 +2,7 @@ RSpec.describe SettingsReader::Reader do
   let(:config) { SettingsReader.config }
   let(:reader) { described_class.new('', config) }
 
-  context 'default providers' do
+  context 'with default providers' do
     describe '#get' do
       it 'gets value from file' do
         expect(reader.get('application/name')).to eq('NestedStructure')
@@ -21,16 +21,14 @@ RSpec.describe SettingsReader::Reader do
 
   context 'with custom provider' do
     let(:reader) { described_class.new('', config) }
-    let(:provider_class) { double('CustomProvider', new: provider) }
+    let(:provider_class) { class_double(SettingsReader::Providers::Abstract, new: provider) }
     let(:provider) { instance_double(SettingsReader::Providers::Abstract) }
+
     before do
       config.settings_providers = [
         provider_class,
         SettingsReader::Providers::LocalStorage
       ]
-    end
-
-    before do
       allow(provider).to receive(:get).and_return(nil)
       allow(provider).to receive(:get).with('application/services/consul/domain').and_return('my.domain')
     end
@@ -57,7 +55,7 @@ RSpec.describe SettingsReader::Reader do
     end
   end
 
-  context 'new load' do
+  context 'when new load' do
     let(:reader) { described_class.new('', config).load('application') }
 
     before do
@@ -79,7 +77,7 @@ RSpec.describe SettingsReader::Reader do
     end
   end
 
-  context 'custom resolvers' do
+  context 'with custom resolvers' do
     let(:reader) { described_class.new('', config) }
     let(:resolver_class) { class_double(SettingsReader::Resolvers::Abstract, new: resolver) }
     let(:resolver) do

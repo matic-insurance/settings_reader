@@ -8,6 +8,7 @@ require 'settings_reader/configuration'
 require 'settings_reader/reader'
 require 'settings_reader/utils'
 
+# Flexible Settings reader with support of custom backends and value resolutions
 module SettingsReader
   class Error < StandardError; end
 
