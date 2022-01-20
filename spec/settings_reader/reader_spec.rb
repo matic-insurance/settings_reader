@@ -41,11 +41,11 @@ RSpec.describe SettingsReader::Reader do
     end
 
     describe '#get' do
-      it 'gets value from consul if it exists' do
+      it 'gets value from custom provider if it exists' do
         expect(reader.get('application/services/consul/domain')).to eq('my.domain')
       end
 
-      it 'gets value from file if it does not exist in Consul' do
+      it 'gets value from file if it does not exist in custom provider' do
         expect(reader.get('application/name')).to eq('NestedStructure')
       end
 
@@ -99,7 +99,7 @@ RSpec.describe SettingsReader::Reader do
         expect(reader.get('application/name')).to eq('resolved')
       end
 
-      it 'resolves value from consul' do
+      it 'resolves value from custom provider' do
         expect(reader.get('application/key')).to eq('resolved')
       end
 
