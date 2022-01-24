@@ -5,7 +5,8 @@ module SettingsReader
       include SettingsReader::Mixins::Path
       include SettingsReader::Mixins::Values
 
-      def get(_path)
+      # get value from backend by full_path or return nil if missing
+      def get(_full_path)
         raise NotImplementedError
       end
     end
