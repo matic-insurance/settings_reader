@@ -1,6 +1,8 @@
 module SettingsReader
   # Orchestrates fetching values from backend and resolving them
   class Reader
+    include SettingsReader::Mixins::Path
+
     def initialize(base_path, config)
       @base_path = base_path
       @config = config
@@ -9,7 +11,7 @@ module SettingsReader
     end
 
     def get(sub_path)
-      full_path = SettingsReader::Utils.generate_path(@base_path, sub_path)
+      full_path = generate_path(@base_path, sub_path)
       value = fetch_value(full_path)
       resolve_value(value, full_path)
     end
@@ -17,7 +19,7 @@ module SettingsReader
     alias [] get
 
     def load(sub_path)
-      new_path = SettingsReader::Utils.generate_path(@base_path, sub_path)
+      new_path = generate_path(@base_path, sub_path)
       SettingsReader::Reader.new(new_path, @config)
     end
 
