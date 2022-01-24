@@ -1,9 +1,11 @@
 require 'yaml'
-require 'deep_merge'
 
 module SettingsReader
   module Backends
-    # Provides access to settings stored in file system with support of base and local files
+    # Provides access to settings stored as YAML file.
+    # File will be read once on init and cached in memory:
+    #   When file is missing - no error will be raised
+    #   When file is invalid - SettingsReader::Error is raised
     class YamlFile < Abstract
       def initialize(file_path)
         super()
