@@ -2,6 +2,8 @@ module SettingsReader
   module Resolvers
     # Abstract resolver with basic functionality
     class Abstract
+      include SettingsReader::Mixins::Values
+
       def resolvable?(_value, _path)
         false
       end

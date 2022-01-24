@@ -6,12 +6,13 @@ module SettingsReader
     # Provides access to settings stored in file system with support of base and local files
     class YamlFile < Abstract
       def initialize(file_path)
-        super(nil, nil)
+        super()
         @data = read_yml(file_path)
       end
 
       def get(path)
-        get_value_from_hash(absolute_key_path(path), @data)
+        parts = decompose_path(path)
+        get_value_from_hash(@data, parts)
       end
 
       private

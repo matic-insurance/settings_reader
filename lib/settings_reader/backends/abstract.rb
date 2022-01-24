@@ -2,24 +2,11 @@ module SettingsReader
   module Backends
     # Abstract class with basic functionality
     class Abstract
-      def initialize(base_path, config)
-        @base_path = base_path
-        @config = config
-      end
+      include SettingsReader::Mixins::Path
+      include SettingsReader::Mixins::Values
 
       def get(_path)
         raise NotImplementedError
-      end
-
-      protected
-
-      def absolute_key_path(path)
-        SettingsReader::Utils.generate_path(@base_path, path)
-      end
-
-      def get_value_from_hash(path, data)
-        parts = SettingsReader::Utils.decompose_path(path)
-        data.dig(*parts).clone
       end
     end
   end
