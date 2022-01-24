@@ -8,14 +8,14 @@ RSpec.describe SettingsReader do
   end
 
   describe 'integration flows', :default_settings_file do
-    describe 'providers priority' do
-      it 'reads value from first provider' do
+    describe 'backends priority' do
+      it 'reads value from first backend' do
         set_custom_value('application/name', 'bar')
         settings = described_class.load
         expect(settings.get('application/name')).to eq('bar')
       end
 
-      it 'reads value from second provider when first missing' do
+      it 'reads value from second backend when first missing' do
         settings = described_class.load
         expect(settings.get('application/name')).to eq('NestedStructure')
       end

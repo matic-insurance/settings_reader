@@ -3,20 +3,20 @@ module SettingsReader
   class Configuration
     DEFAULT_BASE_FILE_PATH = 'config/app_settings.yml'.freeze
     DEFAULT_LOCAL_FILE_PATH = 'config/app_settings.local.yml'.freeze
-    DEFAULT_PROVIDERS = [
-      SettingsReader::Providers::LocalStorage
+    DEFAULT_BACKENDS = [
+      SettingsReader::Backends::LocalStorage
     ].freeze
     DEFAULT_RESOLVERS = [
       SettingsReader::Resolvers::Env
     ].freeze
     attr_accessor :base_file_path, :local_file_path,
-                  :settings_providers, :value_resolvers
+                  :backends, :resolvers
 
     def initialize
       @base_file_path = DEFAULT_BASE_FILE_PATH
       @local_file_path = DEFAULT_LOCAL_FILE_PATH
-      @settings_providers = DEFAULT_PROVIDERS
-      @value_resolvers = DEFAULT_RESOLVERS
+      @backends = DEFAULT_BACKENDS
+      @resolvers = DEFAULT_RESOLVERS
     end
   end
 end

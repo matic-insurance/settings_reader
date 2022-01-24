@@ -1,6 +1,6 @@
 require 'settings_reader/version'
-require 'settings_reader/providers/abstract'
-require 'settings_reader/providers/local_storage'
+require 'settings_reader/backends/abstract'
+require 'settings_reader/backends/local_storage'
 require 'settings_reader/resolvers/abstract'
 require 'settings_reader/resolvers/env'
 require 'settings_reader/resolvers/erb'

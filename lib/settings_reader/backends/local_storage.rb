@@ -2,7 +2,7 @@ require 'yaml'
 require 'deep_merge'
 
 module SettingsReader
-  module Providers
+  module Backends
     # Provides access to settings stored in file system with support of base and local files
     class LocalStorage < Abstract
       def initialize(base_path, config)

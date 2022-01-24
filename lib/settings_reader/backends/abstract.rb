@@ -1,5 +1,5 @@
 module SettingsReader
-  module Providers
+  module Backends
     # Abstract class with basic functionality
     class Abstract
       def initialize(base_path, config)
