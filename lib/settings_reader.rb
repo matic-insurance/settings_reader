@@ -1,6 +1,6 @@
 require 'settings_reader/version'
 require 'settings_reader/backends/abstract'
-require 'settings_reader/backends/local_storage'
+require 'settings_reader/backends/yaml_file'
 require 'settings_reader/resolvers/abstract'
 require 'settings_reader/resolvers/env'
 require 'settings_reader/resolvers/erb'
@@ -12,17 +12,9 @@ require 'settings_reader/utils'
 module SettingsReader
   class Error < StandardError; end
 
-  class << self
-    attr_accessor :config
-  end
-
-  self.config ||= SettingsReader::Configuration.new
-
-  def self.configure
-    yield(config)
-  end
-
-  def self.load(path = '')
-    Reader.new(path, config)
+  def self.load(base_path = '')
+    configuration = SettingsReader::Configuration.new
+    yield(configuration) if block_given?
+    Reader.new(base_path, configuration)
   end
 end

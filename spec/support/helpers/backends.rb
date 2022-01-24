@@ -1,23 +1,23 @@
 module Helpers
   module Backends
     def set_custom_value(path, value)
-      MemoryResolver.custom_values ||= {}
-      MemoryResolver.custom_values[path] = value
+      MemoryBackend.custom_values ||= {}
+      MemoryBackend.custom_values[path] = value
     end
 
     def clear_custom_values
-      return unless MemoryResolver.custom_values
+      return unless MemoryBackend.custom_values
 
-      MemoryResolver.custom_values = {}
+      MemoryBackend.custom_values = {}
     end
 
-    class MemoryResolver < SettingsReader::Backends::Abstract
+    class MemoryBackend
       class << self
         attr_accessor :custom_values
       end
 
       def get(path)
-        cache[absolute_key_path(path)]
+        cache[path]
       end
 
       private

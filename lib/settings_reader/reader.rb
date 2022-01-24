@@ -4,20 +4,21 @@ module SettingsReader
     def initialize(base_path, config)
       @base_path = base_path
       @config = config
-      @backends = config.backends.map { |backend| backend.new(base_path, config) }
-      @resolvers = config.resolvers.map(&:new)
+      @backends = config.backends
+      @resolvers = config.resolvers
     end
 
-    def get(path)
-      value = fetch_value(path)
-      resolve_value(value, path)
+    def get(sub_path)
+      full_path = SettingsReader::Utils.generate_path(@base_path, sub_path)
+      value = fetch_value(full_path)
+      resolve_value(value, full_path)
     end
 
     alias [] get
 
     def load(sub_path)
       new_path = SettingsReader::Utils.generate_path(@base_path, sub_path)
-      self.class.new(new_path, @config)
+      SettingsReader::Reader.new(new_path, @config)
     end
 
     protected

@@ -3,23 +3,27 @@ module Helpers
     def fixture_path(defaults_fixture)
       File.expand_path("../fixtures/#{defaults_fixture}.yml", __dir__)
     end
+
+    def testing_config
+      config = SettingsReader::Configuration.new
+      config.backends = [
+        Helpers::Backends::MemoryBackend.new,
+        SettingsReader::Backends::YamlFile.new(fixture_path('base_application_settings'))
+      ]
+      config
+    end
+
+    def testing_settings
+      SettingsReader.load do |config|
+        config.backends = [
+          Helpers::Backends::MemoryBackend.new,
+          SettingsReader::Backends::YamlFile.new(fixture_path('base_application_settings'))
+        ]
+      end
+    end
   end
 end
 
 RSpec.configure do |config|
   config.include(Helpers::Configuration)
-
-  config.before do
-    SettingsReader.configure do |settings_config|
-      settings_config.base_file_path = fixture_path('base_application_settings')
-      settings_config.backends = [
-        Helpers::Backends::MemoryResolver,
-        SettingsReader::Backends::LocalStorage
-      ]
-    end
-  end
-
-  config.after do
-    SettingsReader.config = SettingsReader::Configuration.new
-  end
 end

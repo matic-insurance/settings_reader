@@ -1,5 +1,5 @@
 RSpec.describe SettingsReader::Reader do
-  let(:config) { SettingsReader.config }
+  let(:config) { testing_config }
   let(:reader) { described_class.new('', config) }
 
   context 'with default backends' do
@@ -20,24 +20,15 @@ RSpec.describe SettingsReader::Reader do
   end
 
   context 'with custom backend' do
-    let(:reader) { described_class.new('', config) }
-    let(:backend_class) { class_double(SettingsReader::Backends::Abstract, new: backend) }
     let(:backend) { instance_double(SettingsReader::Backends::Abstract) }
 
     before do
       config.backends = [
-        backend_class,
-        SettingsReader::Backends::LocalStorage
+        backend,
+        SettingsReader::Backends::YamlFile.new(fixture_path('base_application_settings'))
       ]
       allow(backend).to receive(:get).and_return(nil)
       allow(backend).to receive(:get).with('application/services/consul/domain').and_return('my.domain')
-    end
-
-    describe '.initialize' do
-      it 'creates custom backend' do
-        reader
-        expect(backend_class).to have_received(:new).with('', config)
-      end
     end
 
     describe '#get' do
@@ -78,8 +69,6 @@ RSpec.describe SettingsReader::Reader do
   end
 
   context 'with custom resolvers' do
-    let(:reader) { described_class.new('', config) }
-    let(:resolver_class) { class_double(SettingsReader::Resolvers::Abstract, new: resolver) }
     let(:resolver) do
       resolver = instance_double(SettingsReader::Resolvers::Abstract)
       allow(resolver).to receive(:resolvable?).with('please_resolve', anything).and_return(true)
@@ -90,7 +79,7 @@ RSpec.describe SettingsReader::Reader do
     end
 
     before do
-      config.resolvers = [resolver_class]
+      config.resolvers = [resolver]
       set_custom_value('application/key', 'please_resolve')
     end
 

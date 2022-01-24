@@ -4,10 +4,10 @@ require 'deep_merge'
 module SettingsReader
   module Backends
     # Provides access to settings stored in file system with support of base and local files
-    class LocalStorage < Abstract
-      def initialize(base_path, config)
-        super
-        @data = load
+    class YamlFile < Abstract
+      def initialize(file_path)
+        super(nil, nil)
+        @data = read_yml(file_path)
       end
 
       def get(path)
@@ -15,21 +15,6 @@ module SettingsReader
       end
 
       private
-
-      def load
-        base_yml = read_yml(base_file_path)
-        local_yml = read_yml(local_file_path)
-        DeepMerge.deep_merge!(local_yml, base_yml, preserve_unmergeables: false, overwrite_arrays: true,
-                                                   merge_nil_values: true)
-      end
-
-      def base_file_path
-        @config.base_file_path
-      end
-
-      def local_file_path
-        @config.local_file_path
-      end
 
       def read_yml(path)
         return {} unless File.exist?(path)
