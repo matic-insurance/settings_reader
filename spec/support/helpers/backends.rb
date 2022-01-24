@@ -11,7 +11,7 @@ module Helpers
       MemoryResolver.custom_values = {}
     end
 
-    class MemoryResolver < SettingsReader::Providers::Abstract
+    class MemoryResolver < SettingsReader::Backends::Abstract
       class << self
         attr_accessor :custom_values
       end

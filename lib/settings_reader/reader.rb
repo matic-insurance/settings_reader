@@ -1,11 +1,11 @@
 module SettingsReader
-  # Orchestrates fetching values from provider and resolving them
+  # Orchestrates fetching values from backend and resolving them
   class Reader
     def initialize(base_path, config)
       @base_path = base_path
       @config = config
-      @providers = config.settings_providers.map { |provider| provider.new(base_path, config) }
-      @resolvers = config.value_resolvers.map(&:new)
+      @backends = config.backends.map { |backend| backend.new(base_path, config) }
+      @resolvers = config.resolvers.map(&:new)
     end
 
     def get(path)
@@ -30,8 +30,8 @@ module SettingsReader
     end
 
     def fetch_value(path)
-      @providers.each do |provider|
-        value = provider.get(path)
+      @backends.each do |backend|
+        value = backend.get(path)
         check_deep_structure(value, path)
         return value unless value.nil?
       end

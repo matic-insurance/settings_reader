@@ -2,7 +2,7 @@ RSpec.describe SettingsReader::Reader do
   let(:config) { SettingsReader.config }
   let(:reader) { described_class.new('', config) }
 
-  context 'with default providers' do
+  context 'with default backends' do
     describe '#get' do
       it 'gets value from file' do
         expect(reader.get('application/name')).to eq('NestedStructure')
@@ -19,33 +19,33 @@ RSpec.describe SettingsReader::Reader do
     end
   end
 
-  context 'with custom provider' do
+  context 'with custom backend' do
     let(:reader) { described_class.new('', config) }
-    let(:provider_class) { class_double(SettingsReader::Providers::Abstract, new: provider) }
-    let(:provider) { instance_double(SettingsReader::Providers::Abstract) }
+    let(:backend_class) { class_double(SettingsReader::Backends::Abstract, new: backend) }
+    let(:backend) { instance_double(SettingsReader::Backends::Abstract) }
 
     before do
-      config.settings_providers = [
-        provider_class,
-        SettingsReader::Providers::LocalStorage
+      config.backends = [
+        backend_class,
+        SettingsReader::Backends::LocalStorage
       ]
-      allow(provider).to receive(:get).and_return(nil)
-      allow(provider).to receive(:get).with('application/services/consul/domain').and_return('my.domain')
+      allow(backend).to receive(:get).and_return(nil)
+      allow(backend).to receive(:get).with('application/services/consul/domain').and_return('my.domain')
     end
 
     describe '.initialize' do
-      it 'creates custom provider' do
+      it 'creates custom backend' do
         reader
-        expect(provider_class).to have_received(:new).with('', config)
+        expect(backend_class).to have_received(:new).with('', config)
       end
     end
 
     describe '#get' do
-      it 'gets value from custom provider if it exists' do
+      it 'gets value from custom backend if it exists' do
         expect(reader.get('application/services/consul/domain')).to eq('my.domain')
       end
 
-      it 'gets value from file if it does not exist in custom provider' do
+      it 'gets value from file if it does not exist in custom backend' do
         expect(reader.get('application/name')).to eq('NestedStructure')
       end
 
@@ -90,7 +90,7 @@ RSpec.describe SettingsReader::Reader do
     end
 
     before do
-      config.value_resolvers = [resolver_class]
+      config.resolvers = [resolver_class]
       set_custom_value('application/key', 'please_resolve')
     end
 
@@ -99,7 +99,7 @@ RSpec.describe SettingsReader::Reader do
         expect(reader.get('application/name')).to eq('resolved')
       end
 
-      it 'resolves value from custom provider' do
+      it 'resolves value from custom backend' do
         expect(reader.get('application/key')).to eq('resolved')
       end
 
