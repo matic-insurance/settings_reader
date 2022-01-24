@@ -69,9 +69,13 @@ RSpec.describe SettingsReader::Backends::YamlFile do
     end
   end
 
-  context 'when YML file has invalid syntax' do
-    it 'raises error on create' do
+  context 'when YML file incorrect' do
+    it 'raises error on invalid syntax' do
       expect { described_class.new(fixture_path('invalid_syntax')) }.to raise_error(SettingsReader::Error)
+    end
+
+    it 'not raises error on missing file' do
+      expect { described_class.new(fixture_path('file_missing')) }.not_to raise_error
     end
   end
 end
