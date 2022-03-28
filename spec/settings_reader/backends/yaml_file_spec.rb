@@ -69,13 +69,31 @@ RSpec.describe SettingsReader::Backends::YamlFile do
     end
   end
 
-  context 'when YML file incorrect' do
-    it 'raises error on invalid syntax' do
-      expect { described_class.new(fixture_path('invalid_syntax')) }.to raise_error(SettingsReader::Error)
+  context 'when YML missing' do
+    it 'not raises error on initialize' do
+      expect { described_class.new('missing.yml') }.not_to raise_error
     end
 
-    it 'not raises error on missing file' do
-      expect { described_class.new(fixture_path('file_missing')) }.not_to raise_error
+    it 'returns nil on get' do
+      expect(described_class.new('missing.yml').get('app/test')).to eq(nil)
+    end
+  end
+
+  context 'when YML has invalid syntax' do
+    it 'raises error' do
+      expect { described_class.new(fixture_path('yml_is_invalid')) }.to raise_error(SettingsReader::Error)
+    end
+  end
+
+  context 'when YML considered as big string' do
+    it 'raises error' do
+      expect { described_class.new(fixture_path('yml_is_string')) }.to raise_error(SettingsReader::Error)
+    end
+  end
+
+  context 'when YML considered as array' do
+    it 'raises error' do
+      expect { described_class.new(fixture_path('yml_is_array')) }.to raise_error(SettingsReader::Error)
     end
   end
 end
