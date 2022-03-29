@@ -80,10 +80,10 @@ workflows:
     jobs:
 
       - rspec-test:
-          name: RSpec Test
+          name: "RSpec Test"
       
       - rubocop:
-          name: Robocop
+          name: "Rubocop"
 
   settings_reader.release:
     jobs:
