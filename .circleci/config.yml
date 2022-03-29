@@ -82,7 +82,7 @@ workflows:
       - rspec-test:
           name: RSpec Test
       
-      - robocop:
+      - rubocop:
           name: Robocop
 
   settings_reader.release:
