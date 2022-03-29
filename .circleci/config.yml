@@ -18,7 +18,7 @@ jobs:
   
   robocop:
     docker:
-      - image: cimg/ruby:2.6.6
+      - image: cimg/ruby:2.5
     steps:
       - checkout
       - ruby/install-deps
@@ -64,7 +64,7 @@ workflows:
           filters:
             branches:
               only:
-                - /.*/
+                - master
     jobs:
       - swissknife/codeql-analysis:
           name: "CodeQL Scan"
