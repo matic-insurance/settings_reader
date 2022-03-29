@@ -17,7 +17,7 @@ jobs:
           name: Run rspec
           command: bundle exec rspec
   
-  robocop:
+  rubocop:
     docker:
       - image: cimg/ruby:2.5
     resource_class: small
@@ -25,7 +25,7 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-          name: Run robocop
+          name: Run rubocop
           command: bundle exec rubocop --parallel
 
   release:
@@ -73,8 +73,8 @@ workflows:
       - swissknife/codeql-analysis:
           name: "CodeQL Scan"
       
-      - robocop:
-          name: Robocop
+      - rubocop:
+          name: "Rubocop"
   
   settings_reader.build:
     jobs:
