@@ -87,8 +87,9 @@ workflows:
       
       - swissknife/codeql-analysis:
           name: "CodeQL Scan"
-          environment:
-            CODEQL_ACTION_LANGUAGES: ruby
+          parameters:
+            languages: ruby
+  
   settings_reader.release:
     jobs:
 
