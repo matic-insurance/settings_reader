@@ -9,6 +9,7 @@ jobs:
   rspec-test:
     docker:
       - image: cimg/ruby:2.6.6
+    resource_class: small
     steps:
       - checkout
       - ruby/install-deps
@@ -19,6 +20,7 @@ jobs:
   robocop:
     docker:
       - image: cimg/ruby:2.5
+    resource_class: small
     steps:
       - checkout
       - ruby/install-deps
@@ -33,6 +35,7 @@ jobs:
         default: "default-tag"
     docker:
       - image: cimg/ruby:2.6.6
+    resource_class: small
     environment:
       RELEASE_TAG: << parameters.tag >>
     steps:
@@ -66,19 +69,21 @@ workflows:
               only:
                 - master
     jobs:
+      
       - swissknife/codeql-analysis:
           name: "CodeQL Scan"
-
+      
+      - robocop:
+          name: Robocop
+  
   settings_reader.build:
     jobs:
 
       - rspec-test:
           name: RSpec Test
-          context: global
       
       - robocop:
           name: Robocop
-          context: global
 
   settings_reader.release:
     jobs:
