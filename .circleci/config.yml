@@ -77,7 +77,7 @@ workflows:
           context: global
       
       - robocop:
-          name: RSpec Test
+          name: Robocop
           context: global
 
   settings_reader.release:
