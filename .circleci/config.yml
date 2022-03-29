@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.4.0
+  swissknife: roopakv/swissknife@0.67.0
 
 jobs:
 
@@ -14,6 +15,16 @@ jobs:
       - run:
           name: Run rspec
           command: bundle exec rspec
+  
+  robocop:
+    docker:
+      - image: cimg/ruby:2.6.6
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Run robocop
+          command: bundle exec rubocop --parallel
 
   release:
     parameters:
@@ -45,12 +56,24 @@ jobs:
           command: gem push *.gem
 
 workflows:
-  version: 2
+
+  code-ql:
+    triggers:
+      - schedule:
+          cron: "30 0 * * 1" # At 12:30 AM, only on Monday
+
+    jobs:
+      - swissknife/codeql-analysis:
+          name: "CodeQL Scan"
 
   settings_reader.build:
     jobs:
 
       - rspec-test:
+          name: RSpec Test
+          context: global
+      
+      - robocop:
           name: RSpec Test
           context: global
 
