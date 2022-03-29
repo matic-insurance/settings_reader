@@ -61,7 +61,10 @@ workflows:
     triggers:
       - schedule:
           cron: "30 0 * * 1" # At 12:30 AM, only on Monday
-
+          filters:
+            branches:
+              only:
+                - /.*/
     jobs:
       - swissknife/codeql-analysis:
           name: "CodeQL Scan"
