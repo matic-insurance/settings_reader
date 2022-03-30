@@ -18,7 +18,7 @@ jobs:
       - checkout
       - ruby/install-deps
       - run:
-          name: Run rspec << parameters.ruby-version >>
+          name: Run rspec
           command: bundle exec rspec
       - run:
           name: Upload coverage
