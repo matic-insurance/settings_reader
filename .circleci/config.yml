@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.4.0
-  swissknife: roopakv/swissknife@0.67.0
 
 jobs:
 
@@ -13,6 +12,8 @@ jobs:
     docker:
       - image: cimg/ruby:<< parameters.ruby-version >>
     resource_class: small
+    environment:
+      CODECOV_TOKEN: $CODECOV_TOKEN
     steps:
       - checkout
       - ruby/install-deps
