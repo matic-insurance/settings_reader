@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.4.0
+  codecov: codecov/codecov@3.2.2
 
 jobs:
 
@@ -14,6 +15,7 @@ jobs:
     resource_class: small
     environment:
       CODECOV_TOKEN: $CODECOV_TOKEN
+      COVERAGE: true
     steps:
       - checkout
       - ruby/install-deps
