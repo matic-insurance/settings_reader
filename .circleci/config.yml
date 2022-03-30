@@ -67,7 +67,7 @@ workflows:
     jobs:
 
       - rspec-test:
-          name: "RSpec Test"
+          name: "RSpec Test << parameters.ruby-version >>"
           matrix:
             parameters:
               ruby-version: [ '2.5', '2.6', '2.7', '3.0' ]
