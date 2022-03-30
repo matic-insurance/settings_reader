@@ -7,8 +7,11 @@ orbs:
 jobs:
 
   rspec-test:
+    parameters:
+      ruby-version:
+        type: string
     docker:
-      - image: cimg/ruby:2.6.6
+      - image: cimg/ruby:<< parameters.ruby-version >>
     resource_class: small
     steps:
       - checkout
@@ -59,37 +62,19 @@ jobs:
           command: gem push *.gem
 
 workflows:
-
-  code-ql:
-    triggers:
-      - schedule:
-          cron: "30 0 * * 1" # At 12:30 AM, only on Monday
-          filters:
-            branches:
-              only:
-                - master
-    jobs:
-      
-      - swissknife/codeql-analysis:
-          name: "CodeQL Scan"
-      
-      - rubocop:
-          name: "Rubocop"
   
   settings_reader.build:
     jobs:
 
       - rspec-test:
           name: "RSpec Test"
+          matrix:
+            parameters:
+              ruby-version: [ '2.5', '2.6', '2.7', '3.0' ]
       
       - rubocop:
           name: "Rubocop"
       
-      - swissknife/codeql-analysis:
-          name: "CodeQL Scan"
-          parameters:
-            languages: ruby
-  
   settings_reader.release:
     jobs:
 
@@ -100,4 +85,4 @@ workflows:
             branches:
               ignore: /.*/
             tags: 
-              only: /\d\.\d\.\d/ # It should be [digin dot digit dot digit] format
+              only: /\d\.\d\.\d/
