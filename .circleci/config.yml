@@ -21,9 +21,6 @@ jobs:
           name: Run rspec << parameters.ruby-version >>
           command: bundle exec rspec
       - run:
-          name: Run rspec sd
-          command: echo << parameters.vers >>
-      - run:
           name: Upload coverage
           command: bash <(curl -s https://codecov.io/bash)
   
@@ -77,8 +74,8 @@ workflows:
           name: RSpec Test
           matrix:
             parameters:
-              ruby-version: [ '2.5', '2.6', '2.7', '3.0' ],
-              vers: ["0"]
+              ruby-version: [ '2.5', '2.6', '2.7', '3.0' ]
+
       - rubocop:
           name: Rubocop
       
