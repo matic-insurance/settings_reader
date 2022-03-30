@@ -13,7 +13,6 @@ jobs:
       - image: cimg/ruby:<< parameters.ruby-version >>
     resource_class: small
     environment:
-      CODECOV_TOKEN: $CODECOV_TOKEN
       COVERAGE: true
     steps:
       - checkout
