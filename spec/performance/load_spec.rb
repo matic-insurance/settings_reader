@@ -1,4 +1,4 @@
-RSpec.describe SettingsReader, :performance do
+RSpec.describe 'Load performance', :performance do # rubocop:disable RSpec/DescribeClass
   describe 'Load performance' do
     it 'is faster then 0.1ms for one read' do
       settings = testing_settings
