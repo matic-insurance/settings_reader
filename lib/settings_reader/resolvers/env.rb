@@ -1,7 +1,7 @@
 module SettingsReader
   module Resolvers
     # Resolve values in environment variable
-    class Env
+    class Env < SettingsReader::Resolvers::Abstract
       IDENTIFIER = 'env://'.freeze
 
       # Returns true when value starts from `env://`
