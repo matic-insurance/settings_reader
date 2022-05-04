@@ -23,6 +23,14 @@ module SettingsReader
       SettingsReader::Reader.new(new_path, @config)
     end
 
+    def blank?
+      @backends.all? { |backend| backend.get(@base_path).nil? }
+    end
+
+    def present?
+      !blank?
+    end
+
     protected
 
     def check_deep_structure(value, path)

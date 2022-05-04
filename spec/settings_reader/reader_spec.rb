@@ -12,9 +12,29 @@ RSpec.describe SettingsReader::Reader do
         expect(reader.get('application/key')).to eq(nil)
       end
 
-      it 'raising error when reading tree' do
+      it 'raises error when reading tree' do
         err = %r{Getting value of complex object at path: 'application/services'}
         expect { reader.get('application/services') }.to raise_error(SettingsReader::Error, err)
+      end
+    end
+
+    describe '#blank?' do
+      it 'returns false when existing values are loaded' do
+        expect(reader.load('instances').blank?).to eq(false)
+      end
+
+      it 'returns true when unexisting values are loaded' do
+        expect(reader.load('unexisting').blank?).to eq(true)
+      end
+    end
+
+    describe '#present?' do
+      it 'returns true when existing values are loaded' do
+        expect(reader.load('instances').present?).to eq(true)
+      end
+
+      it 'returns false when unexisting values are loaded' do
+        expect(reader.load('unexisting').present?).to eq(false)
       end
     end
   end
@@ -42,6 +62,26 @@ RSpec.describe SettingsReader::Reader do
 
       it 'returns nil if the key does not exist' do
         expect(reader.get('application/key')).to eq(nil)
+      end
+    end
+
+    describe '#blank?' do
+      it 'returns false when existing values are loaded' do
+        expect(reader.load('instances').blank?).to eq(false)
+      end
+
+      it 'returns true when unexisting values are loaded' do
+        expect(reader.load('unexisting').blank?).to eq(true)
+      end
+    end
+
+    describe '#present?' do
+      it 'returns true when existing values are loaded' do
+        expect(reader.load('instances').present?).to eq(true)
+      end
+
+      it 'returns false when unexisting values are loaded' do
+        expect(reader.load('unexisting').present?).to eq(false)
       end
     end
   end

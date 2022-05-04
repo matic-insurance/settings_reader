@@ -110,6 +110,15 @@ db_settings['user']                                      # "app"
 db_params = db_settings.load('parameters')               # SettingsReader::Reader
 ```
 
+You can also check if sub-setting tree exists:
+
+```ruby
+APP_SETTINGS.load('integrations/database').blank?      # false
+APP_SETTINGS.load('integrations/database').present?    # true
+APP_SETTINGS.load('integrations/unexisiting').blank?   # true
+APP_SETTINGS.load('integrations/unexisiting').present? # false
+```
+
 ## Advanced Configurations & Customization
 
 ### Backends

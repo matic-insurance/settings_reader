@@ -1,7 +1,7 @@
 module SettingsReader
   module Resolvers
     # Run values through ERB
-    class Erb
+    class Erb < SettingsReader::Resolvers::Abstract
       IDENTIFIER = /(<%=).*(%>)/.freeze
 
       # Returns true when value contain Erb template <%= code_is_here %>
