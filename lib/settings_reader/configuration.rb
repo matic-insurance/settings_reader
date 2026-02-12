@@ -26,7 +26,7 @@ module SettingsReader
     end
 
     def rails_env
-      ENV['RAILS_ENV']
+      ENV.fetch('RAILS_ENV', nil)
     end
   end
 end

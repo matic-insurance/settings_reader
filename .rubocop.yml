@@ -1,4 +1,5 @@
-require:
+plugins:
+  - rubocop-rake
   - rubocop-rspec
 
 AllCops:
@@ -9,4 +10,10 @@ Style/FrozenStringLiteralComment:
   Enabled: false
 
 Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context', 'shared_examples']
+  AllowedMethods: ['describe', 'context', 'shared_examples']
+
+RSpec/MultipleExpectations:
+  Max: 2
+
+RSpec/NestedGroups:
+  Max: 4

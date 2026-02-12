@@ -14,11 +14,11 @@ RSpec.describe SettingsReader::Backends::YamlFile do
 
     context 'when path is not correct' do
       it 'return nils on complex paths' do
-        expect(backend.get('level_3/level_4')).to eq(nil)
+        expect(backend.get('level_3/level_4')).to be_nil
       end
 
       it 'return nils on simple paths' do
-        expect(backend.get('children')).to eq(nil)
+        expect(backend.get('children')).to be_nil
       end
     end
 
@@ -34,11 +34,11 @@ RSpec.describe SettingsReader::Backends::YamlFile do
       end
 
       it 'returns boolean values for true' do
-        expect(backend.get('values/boolean_true')).to eq(true)
+        expect(backend.get('values/boolean_true')).to be(true)
       end
 
       it 'returns boolean values for false' do
-        expect(backend.get('values/boolean_false')).to eq(false)
+        expect(backend.get('values/boolean_false')).to be(false)
       end
 
       it 'returns integer values' do
@@ -50,11 +50,11 @@ RSpec.describe SettingsReader::Backends::YamlFile do
       end
 
       it 'returns empty values' do
-        expect(backend.get('values/empty')).to eq(nil)
+        expect(backend.get('values/empty')).to be_nil
       end
 
       it 'returns nil when missing' do
-        expect(backend.get('missing')).to eq(nil)
+        expect(backend.get('missing')).to be_nil
       end
 
       it 'returns object values' do
@@ -75,7 +75,7 @@ RSpec.describe SettingsReader::Backends::YamlFile do
     end
 
     it 'returns nil on get' do
-      expect(described_class.new('missing.yml').get('app/test')).to eq(nil)
+      expect(described_class.new('missing.yml').get('app/test')).to be_nil
     end
   end
 

@@ -22,7 +22,7 @@ module SettingsReader
       def read_yml(path)
         return {} unless File.exist?(path)
 
-        data = YAML.safe_load(IO.read(path))
+        data = YAML.safe_load(File.read(path))
         raise SettingsReader::Error, "YML Settings at #{path} file has incorrect structure" unless data.is_a?(Hash)
 
         data

@@ -1,6 +1,6 @@
 RSpec.describe SettingsReader do
   it 'has a version number' do
-    expect(SettingsReader::VERSION).not_to be nil
+    expect(SettingsReader::VERSION).not_to be_nil
   end
 
   it 'has load method' do
@@ -21,8 +21,7 @@ RSpec.describe SettingsReader do
 
     describe 'resolvers' do
       it 'resolves value using Env by default' do
-        allow(ENV).to receive(:[]).and_call_original
-        allow(ENV).to receive(:[]).with('TEST_DOMAIN').and_return('my.host')
+        stub_const('ENV', ENV.to_hash.merge('TEST_DOMAIN' => 'my.host'))
         set_custom_value('application/domain', 'env://TEST_DOMAIN')
         expect(testing_settings.get('application/domain')).to eq('my.host')
       end

@@ -9,7 +9,7 @@ RSpec.describe SettingsReader::Reader do
       end
 
       it 'returns nil if the key does not exist' do
-        expect(reader.get('application/key')).to eq(nil)
+        expect(reader.get('application/key')).to be_nil
       end
 
       it 'raises error when reading tree' do
@@ -44,21 +44,21 @@ RSpec.describe SettingsReader::Reader do
 
     describe '#blank?' do
       it 'returns false when existing values are loaded' do
-        expect(reader.load('instances').blank?).to eq(false)
+        expect(reader.load('instances').blank?).to be(false)
       end
 
       it 'returns true when unexisting values are loaded' do
-        expect(reader.load('unexisting').blank?).to eq(true)
+        expect(reader.load('unexisting').blank?).to be(true)
       end
     end
 
     describe '#present?' do
       it 'returns true when existing values are loaded' do
-        expect(reader.load('instances').present?).to eq(true)
+        expect(reader.load('instances').present?).to be(true)
       end
 
       it 'returns false when unexisting values are loaded' do
-        expect(reader.load('unexisting').present?).to eq(false)
+        expect(reader.load('unexisting').present?).to be(false)
       end
     end
   end
@@ -85,7 +85,7 @@ RSpec.describe SettingsReader::Reader do
       end
 
       it 'returns nil if the key does not exist' do
-        expect(reader.get('application/key')).to eq(nil)
+        expect(reader.get('application/key')).to be_nil
       end
     end
 
@@ -110,21 +110,21 @@ RSpec.describe SettingsReader::Reader do
 
     describe '#blank?' do
       it 'returns false when existing values are loaded' do
-        expect(reader.load('instances').blank?).to eq(false)
+        expect(reader.load('instances').blank?).to be(false)
       end
 
       it 'returns true when unexisting values are loaded' do
-        expect(reader.load('unexisting').blank?).to eq(true)
+        expect(reader.load('unexisting').blank?).to be(true)
       end
     end
 
     describe '#present?' do
       it 'returns true when existing values are loaded' do
-        expect(reader.load('instances').present?).to eq(true)
+        expect(reader.load('instances').present?).to be(true)
       end
 
       it 'returns false when unexisting values are loaded' do
-        expect(reader.load('unexisting').present?).to eq(false)
+        expect(reader.load('unexisting').present?).to be(false)
       end
     end
   end
@@ -146,7 +146,7 @@ RSpec.describe SettingsReader::Reader do
       end
 
       it 'returns nil if the key does not exist' do
-        expect(reader.get('application/key')).to eq(nil)
+        expect(reader.get('application/key')).to be_nil
       end
     end
 

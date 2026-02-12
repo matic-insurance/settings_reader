@@ -9,7 +9,7 @@ RSpec.describe SettingsReader::Configuration do
       end
 
       context 'when RAILS_ENV is not set' do
-        before { allow(ENV).to receive(:[]).with('RAILS_ENV').and_return(nil) }
+        before { stub_const('ENV', ENV.to_hash.except('RAILS_ENV')) }
 
         let(:config) { described_class.new }
 
@@ -20,7 +20,7 @@ RSpec.describe SettingsReader::Configuration do
       end
 
       context 'when RAILS_ENV is set' do
-        before { allow(ENV).to receive(:[]).with('RAILS_ENV').and_return('test') }
+        before { stub_const('ENV', ENV.to_hash.merge('RAILS_ENV' => 'test')) }
 
         let(:config) { described_class.new }
 

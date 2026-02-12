@@ -23,22 +23,22 @@ RSpec.describe SettingsReader::Resolvers::Env do
 
   describe '#resolve' do
     it 'returns env value' do
-      allow(ENV).to receive(:[]).with('TEST_URL').and_return('resolved')
+      stub_const('ENV', ENV.to_hash.merge('TEST_URL' => 'resolved'))
       expect(resolver.resolve('env://TEST_URL', path)).to eq('resolved')
     end
 
     it 'returns nil when env missing' do
-      expect(resolver.resolve('env://TEST_URL', path)).to eq(nil)
+      expect(resolver.resolve('env://TEST_URL', path)).to be_nil
     end
 
     context 'with invalid input' do
       it 'returns using whole value when prefix missing' do
-        allow(ENV).to receive(:[]).with('TEST_URL').and_return('resolved')
+        stub_const('ENV', ENV.to_hash.merge('TEST_URL' => 'resolved'))
         expect(resolver.resolve('TEST_URL', path)).to eq('resolved')
       end
 
       it 'converts to string' do
-        allow(ENV).to receive(:[]).with('123').and_return('resolved')
+        stub_const('ENV', ENV.to_hash.merge('123' => 'resolved'))
         expect(resolver.resolve(123, path)).to eq('resolved')
       end
     end
