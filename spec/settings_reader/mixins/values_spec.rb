@@ -3,15 +3,15 @@ RSpec.describe SettingsReader::Mixins::Values do
 
   describe '#cast_value_from_string' do
     it 'casts nil' do
-      expect(cast_value_from_string(nil)).to eq(nil)
+      expect(cast_value_from_string(nil)).to be_nil
     end
 
     it 'casts false boolean' do
-      expect(cast_value_from_string('false')).to eq(false)
+      expect(cast_value_from_string('false')).to be(false)
     end
 
     it 'casts true boolean' do
-      expect(cast_value_from_string('true')).to eq(true)
+      expect(cast_value_from_string('true')).to be(true)
     end
 
     it 'preserves hash' do

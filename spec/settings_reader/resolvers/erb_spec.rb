@@ -31,7 +31,7 @@ RSpec.describe SettingsReader::Resolvers::Erb do
     end
 
     it 'has access to env' do
-      expect(resolver.resolve("<%= ENV['PATH'] %>", path)).to eq(ENV['PATH'])
+      expect(resolver.resolve("<%= ENV['PATH'] %>", path)).to eq(ENV.fetch('PATH', nil))
     end
 
     context 'with invalid input' do

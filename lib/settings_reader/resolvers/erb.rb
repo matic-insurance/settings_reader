@@ -6,7 +6,7 @@ module SettingsReader
 
       # Returns true when value contain Erb template <%= code_is_here %>
       def resolvable?(value, _path)
-        return unless value.is_a?(String)
+        return false unless value.is_a?(String)
 
         IDENTIFIER.match?(value)
       end
