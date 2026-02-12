@@ -3,6 +3,8 @@ module SettingsReader
   class Reader
     include SettingsReader::Mixins::Path
 
+    NO_VALUE = Object.new.freeze
+
     def initialize(base_path, config)
       @base_path = base_path
       @config = config
@@ -14,6 +16,17 @@ module SettingsReader
       full_path = generate_path(@base_path, sub_path)
       value = fetch_value(full_path)
       resolve_value(value, full_path)
+    end
+
+    # raises error if value is not found in any backend and default is not provided
+    def fetch(sub_path, default = NO_VALUE)
+      full_path = generate_path(@base_path, sub_path)
+      value = fetch_value(full_path)
+
+      return value unless value.nil?
+      return default unless default.equal?(NO_VALUE)
+
+      raise SettingsReader::Error, "Value not found in any backend: '#{generate_path(@base_path, sub_path)}'"
     end
 
     alias [] get

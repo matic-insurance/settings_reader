@@ -18,6 +18,30 @@ RSpec.describe SettingsReader::Reader do
       end
     end
 
+    describe '#fetch' do
+      it 'fetches value from file' do
+        expect(reader.fetch('application/name')).to eq('NestedStructure')
+      end
+
+      it 'raises error if the key does not exist and no default provided' do
+        err = %r{Value not found in any backend: 'application/key'}
+        expect { reader.fetch('application/key') }.to raise_error(SettingsReader::Error, err)
+      end
+
+      it 'returns default if the key does not exist and default is provided' do
+        expect(reader.fetch('application/key', 'default_value')).to eq('default_value')
+      end
+
+      it 'returns value even when default is provided' do
+        expect(reader.fetch('application/name', 'default_value')).to eq('NestedStructure')
+      end
+
+      it 'raises error when reading tree' do
+        err = %r{Getting value of complex object at path: 'application/services'}
+        expect { reader.fetch('application/services') }.to raise_error(SettingsReader::Error, err)
+      end
+    end
+
     describe '#blank?' do
       it 'returns false when existing values are loaded' do
         expect(reader.load('instances').blank?).to eq(false)
@@ -65,6 +89,25 @@ RSpec.describe SettingsReader::Reader do
       end
     end
 
+    describe '#fetch' do
+      it 'fetches value from custom backend if it exists' do
+        expect(reader.fetch('application/services/consul/domain')).to eq('my.domain')
+      end
+
+      it 'fetches value from file if it does not exist in custom backend' do
+        expect(reader.fetch('application/name')).to eq('NestedStructure')
+      end
+
+      it 'raises error if the key does not exist and no default provided' do
+        err = %r{Value not found in any backend: 'application/key'}
+        expect { reader.fetch('application/key') }.to raise_error(SettingsReader::Error, err)
+      end
+
+      it 'returns default if the key does not exist and default is provided' do
+        expect(reader.fetch('application/key', 'default_value')).to eq('default_value')
+      end
+    end
+
     describe '#blank?' do
       it 'returns false when existing values are loaded' do
         expect(reader.load('instances').blank?).to eq(false)
@@ -104,6 +147,25 @@ RSpec.describe SettingsReader::Reader do
 
       it 'returns nil if the key does not exist' do
         expect(reader.get('application/key')).to eq(nil)
+      end
+    end
+
+    describe '#fetch' do
+      it 'fetches custom value from first backend' do
+        expect(reader.fetch('services/consul/domain')).to eq('0.0.0.0')
+      end
+
+      it 'fetches value from file if it does not exist in first backend' do
+        expect(reader.fetch('name')).to eq('NestedStructure')
+      end
+
+      it 'raises error if the key does not exist and no default provided' do
+        err = %r{Value not found in any backend: 'application/application/key'}
+        expect { reader.fetch('application/key') }.to raise_error(SettingsReader::Error, err)
+      end
+
+      it 'returns default if the key does not exist and default is provided' do
+        expect(reader.fetch('application/key', 'default_value')).to eq('default_value')
       end
     end
   end

@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.description   = <<-DESCRIPTION
     Customizable 2 step setting reading for your application.
 
-    First settings is retrieved from list of backends and afterwards processed 
+    First settings is retrieved from list of backends and afterwards processed
     by the list of resolvers to allow even more flexibility.
   DESCRIPTION
   spec.homepage      = 'https://github.com/matic-insurance/settings_reader'
@@ -30,10 +30,10 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'codecov', '~> 0.4'
-  spec.add_development_dependency 'rake', '~> 13.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop', '~> 0.66'
-  spec.add_development_dependency 'rubocop-rspec', '~> 1.32.0'
-  spec.add_development_dependency 'simplecov', '~> 0.16'
+  spec.add_development_dependency 'codecov', '~> 0.6'
+  spec.add_development_dependency 'rake', '~> 13.3'
+  spec.add_development_dependency 'rspec', '~> 3.13'
+  spec.add_development_dependency 'rubocop', '~> 1.84'
+  spec.add_development_dependency 'rubocop-rspec', '~> 3.9'
+  spec.add_development_dependency 'simplecov', '~> 0.21'
 end
